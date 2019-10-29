@@ -1,0 +1,21 @@
+{
+  "name": "coremote",
+  "version": "1.0.0",
+  "description": "remote working room",
+  "main": "index.js",
+  "author": "ian",
+  "license": "none",
+  "scripts": {
+    "format": "prettier --single-quote --trailing-comma all --print-width 100 --write \"**/*.js\""
+  },
+  "dependencies": {
+    "bunyan": "^1.8.12",
+    "express": "^4.17.1",
+    "express-nunjucks": "^2.2.3",
+    "nunjucks": "^3.2.0"
+  },
+  "devDependencies": {
+    "@arkweid/lefthook": "^0.6.3",
+    "prettier": "^1.18.2"
+  }
+}
