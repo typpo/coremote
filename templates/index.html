@@ -1,3 +1,168 @@
+<style>
+body {
+  margin: 0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+}
+
+.top {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 8em;
+}
+
+.summary-container {
+  display: flex;
+  align-items: center;
+  background-color: aliceblue;
+  height: 3em;
+}
+
+.summary {
+  padding: 1em;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+
+  background-color: linen;
+  height: 5em;
+}
+
+.control {
+  flex: 1;
+  padding: 1em;
+  max-width: 20em;
+}
+
+.input-status {
+  width: 100%;
+  padding: 0.9em;
+  border: 1px solid #999;
+}
+
+.select-mood {
+  width: 100%;
+  padding: 0.85em;
+  background-color: #fff;
+  border: 1px solid #999;
+}
+
+.btn-join {
+  background-color: #74ad5a;
+  color: #fff;
+  display: inline-flex;
+  border-radius: 3px;
+  font-size: 1.1em;
+  height: 2.4em;
+  line-height: 2.4em;
+  margin: 0;
+  padding: 0 .7em;
+  text-decoration: none;
+  outline: 0;
+  border: 0;
+  cursor: pointer;
+  box-shadow: 0 1px 3px rgba(0,0,0,.171);
+  transition: box-shadow .2s ease;
+}
+
+.flex-container {
+  margin-top: 8em; /* match with .top height */
+  display: flex;
+}
+
+.person-container {
+  position: relative;
+  flex: 1;
+  max-width: 30em;
+}
+
+.person-container img {
+  width: 100%;
+  height: auto;
+}
+
+.reacts {
+  position: absolute;
+  top: 0;
+  right: 0;
+  margin: 0.5em;
+  font-size: 2em;
+}
+
+.react {
+  display: none;
+  cursor: pointer;
+}
+
+.person-container:hover .react {
+  display: inline-block;
+}
+
+.overlay {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  width: 100%;
+}
+
+.caption {
+  color: #fff;
+}
+
+.progress-image {
+  background-color: red;
+  width: 0%;
+  height: 0.2em;
+}
+</style>
 <script src="/js/main.js"></script>
 
-hi
+<video style="display:none"></video>
+
+<div class="top">
+	<div class="summary-container">
+    <div class="summary">
+      Welcome to online coworking. There's no point, except to work while others work.  Snacks are in the kitchen.
+    </div>
+	</div>
+
+	<div class="controls">
+		<div class="control">
+			<input class="input-status" type="text" placeholder="What are you working on?" />
+		</div>
+		<div class="control">
+			<select class="select-mood">
+				<option default value="">Feeling...</option>
+				<option value="PRODUCTIVE">✍️ Productive</option>
+				<option value="THOUGHTFUL">🤔 Thoughtful</option>
+				<option value="HAPPY">😁 Happy</option>
+				<option value="SAD">😢 Sad</option>
+				<option value="ANXIOUS">😟 Anxious</option>
+				<option value="EXCITED">🥳  Excited</option>
+				<option value="BORED">🤤 Bored</option>
+				<option value="ENNUI">❓ Ennui</option>
+			</select>
+		</div>
+		<div class="control">
+			<button class="btn-join">Start Coworking</button>
+		</div>
+	</div>
+</div>
+
+<div class="flex-container">
+  <div id="me-container" class="person-container">
+    <div class="reacts">
+      <span class="react">✌️</span>
+    </div>
+    <img id="me" />
+    <div class="overlay">
+      <div class="caption"><span class="mood">🤔</span> I'm working on this</div>
+      <div class="progress-image"></div>
+    </div>
+  </div>
+  <div class="others"></div>
+</div>
