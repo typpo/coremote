@@ -2,8 +2,12 @@ const path = require('path');
 
 const express = require('express');
 const expressNunjucks = require('express-nunjucks');
+const expressSession = require('express-session');
+const RedisStore = require('connect-redis')(expressSession);
 
+const db = require('./people');
 const { logger } = require('./logging');
+const { redisClient } = require('./redis_helper');
 
 const app = express();
 
@@ -19,8 +23,50 @@ expressNunjucks(app, {
   noCache: isDev,
 });
 
+app.use(
+  expressSession({
+    store: new RedisStore({ client: redisClient }),
+    secret: 'swiggity swoogity',
+    cookie: {
+      secure: !isDev,
+      maxAge: 7 * 24 * 60 * 60 * 1000, // 1 week
+    },
+  }),
+);
+
 app.get('/', (req, res) => {
   res.render('index');
+});
+
+app.post('/api/image', (req, res) => {
+  const uid = req.session.id;
+  const img = req.body.val;
+  logger.info('Got image of length', img.length);
+  if (img) {
+    db.setImage(req.session.id, img);
+  }
+  res.send('');
+});
+
+app.post('/api/status', (req, res) => {
+  const uid = req.session.id;
+  const status = req.body.val.trim();
+  if (status) {
+    db.setStatus(req.session.id, status);
+  }
+  res.send('');
+});
+
+app.post('/api/mood', (req, res) => {
+  const uid = req.session.id;
+  res.send('');
+});
+
+app.get('/api/people', async (req, res) => {
+  const people = await db.getActivePeople();
+  res.send({
+    people,
+  });
 });
 
 const port = process.env.PORT || 14000;

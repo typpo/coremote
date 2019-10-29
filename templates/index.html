@@ -76,7 +76,7 @@ body {
 .person-container {
   position: relative;
   flex: 1;
-  max-width: 30em;
+  max-width: 320px;
 }
 
 .person-container img {
@@ -89,7 +89,7 @@ body {
   top: 0;
   right: 0;
   margin: 0.5em;
-  font-size: 2em;
+  font-size: 1.3em;
 }
 
 .react {
@@ -119,8 +119,6 @@ body {
   height: 0.2em;
 }
 </style>
-<script src="/js/main.js"></script>
-
 <video style="display:none"></video>
 
 <div class="top">
@@ -132,11 +130,11 @@ body {
 
 	<div class="controls">
 		<div class="control">
-			<input class="input-status" type="text" placeholder="What are you working on?" />
+			<input id="status" class="input-status" type="text" placeholder="What are you working on?" />
 		</div>
 		<div class="control">
-			<select class="select-mood">
-				<option default value="">Feeling...</option>
+			<select id="mood" class="select-mood">
+				<option value="">Feeling...</option>
 				<option value="PRODUCTIVE">✍️ Productive</option>
 				<option value="THOUGHTFUL">🤔 Thoughtful</option>
 				<option value="HAPPY">😁 Happy</option>
@@ -148,7 +146,7 @@ body {
 			</select>
 		</div>
 		<div class="control">
-			<button class="btn-join">Start Coworking</button>
+			<button id="join" class="btn-join">Start Coworking</button>
 		</div>
 	</div>
 </div>
@@ -166,3 +164,6 @@ body {
   </div>
   <div class="others"></div>
 </div>
+
+<script src="/js/main.js"></script>
+

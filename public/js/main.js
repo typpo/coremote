@@ -1,19 +1,35 @@
+function post(url, data) {
+  fetch(url, {
+    method: 'POST',
+    body: JSON.stringify(data),
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  });
+}
+
 function captureImage() {
-  var scale = 1.0;
   var video = document.querySelector('video');
   var canvas = document.createElement('canvas');
+  const scale = 320 / video.videoWidth;
   canvas.width = video.videoWidth * scale;
   canvas.height = video.videoHeight * scale;
   canvas.getContext('2d').drawImage(video, 0, 0, canvas.width, canvas.height);
 
   var img = document.getElementById('me');
-  img.src = canvas.toDataURL();
+  var imgData = canvas.toDataURL('image/jpeg', 0.7);
+  img.src = imgData;
+  post('/api/image', {
+    val: imgData,
+  });
 }
 
 // Note that this won't work on Firefox unless the tab is focused:
 // https://bugzilla.mozilla.org/show_bug.cgi?id=1195654
 navigator.mediaDevices
-  .getUserMedia({ video: true })
+  .getUserMedia({
+    video: true,
+  })
   .then(function(mediaStream) {
     var video = document.querySelector('video');
     video.srcObject = mediaStream;
@@ -39,3 +55,26 @@ navigator.mediaDevices
   .catch(function(err) {
     console.error(err);
   });
+
+var statusElt = document.getElementById('status');
+var moodElt = document.getElementById('mood');
+var joinElt = document.getElementById('join');
+
+statusElt.onchange = function(e) {
+  post('/api/status', {
+    val: statusElt.value,
+  });
+};
+
+moodElt.onchange = function(e) {};
+
+joinElt.onclick = function() {
+  // temporary test handler
+  fetch('/api/people')
+    .then(function(resp) {
+      return resp.json();
+    })
+    .then(function(data) {
+      var othersElt = document.getElementById('others');
+    });
+};
