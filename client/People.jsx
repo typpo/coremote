@@ -2,6 +2,8 @@ import React from 'react';
 
 import Person from './Person';
 
+const REFRESH_RATE_MS = 11000;
+
 class People extends React.Component {
   constructor() {
     super();
@@ -10,7 +12,7 @@ class People extends React.Component {
     };
   }
 
-  componentDidMount() {
+  refresh() {
     fetch('/api/people')
       .then((resp) => {
         return resp.json();
@@ -20,6 +22,13 @@ class People extends React.Component {
           people: data.people,
         });
       });
+  }
+
+  componentDidMount() {
+    this.refresh();
+    setInterval(() => {
+      this.refresh();
+    }, REFRESH_RATE_MS);
   }
 
   render() {

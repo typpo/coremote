@@ -83,6 +83,7 @@
   .person-container {
     position: relative;
     flex: 1;
+    width: 25%;
     max-width: 320px;
   }
 
@@ -130,37 +131,13 @@
 <body>
 <video style="display:none"></video>
 
-<div class="top">
-	<div class="summary-container">
-    <div class="summary">
-      Welcome to online coworking. There's no point, except to work while others work.  Snacks are in the kitchen.
-    </div>
-	</div>
-
-	<div class="controls">
-		<div class="control">
-			<input id="status" class="input-status" type="text" placeholder="What are you working on?" />
-		</div>
-		<div class="control">
-			<select id="mood" class="select-mood">
-				<option value="">Feeling...</option>
-				<option value="PRODUCTIVE">✍️ Productive</option>
-				<option value="THOUGHTFUL">🤔 Thoughtful</option>
-				<option value="HAPPY">😁 Happy</option>
-				<option value="SAD">😢 Sad</option>
-				<option value="ANXIOUS">😟 Anxious</option>
-				<option value="EXCITED">🤩 Excited</option>
-				<option value="BORED">🤤 Bored</option>
-				<option value="ENNUI">❓ Ennui</option>
-			</select>
-		</div>
-		<div class="control">
-			<button id="join" class="btn-join">Start Coworking</button>
-		</div>
-	</div>
-</div>
-
 <div id="app"></div>
+<script>
+  window.state = {
+    status: '{{status}}',
+    mood: '{{mood}}',
+  };
+</script>
 <script src="/dist/bundle.js"></script>
 
 </body>

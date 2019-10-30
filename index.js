@@ -34,8 +34,13 @@ app.use(
   }),
 );
 
-app.get('/', (req, res) => {
-  res.render('index');
+app.get('/', async (req, res) => {
+  const status = await db.getStatus(req.session.id);
+  const mood = await db.getMood(req.session.id);
+  res.render('index', {
+    status,
+    mood,
+  });
 });
 
 app.post('/api/image', (req, res) => {
@@ -59,6 +64,10 @@ app.post('/api/status', (req, res) => {
 
 app.post('/api/mood', (req, res) => {
   const uid = req.session.id;
+  const mood = req.body.val.trim();
+  if (mood) {
+    db.setMood(req.session.id, mood);
+  }
   res.send('');
 });
 

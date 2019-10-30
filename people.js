@@ -1,15 +1,27 @@
+const crypto = require('crypto');
+
 const { logger } = require('./logging');
 const { redisClient } = require('./redis_helper');
+
+const ACTIVITY_EXPIRATION_MS = 3 * 60 * 1000;
 
 function getActivePeople() {
   return new Promise((resolve, reject) => {
     redisClient.zrevrangebyscore(
       'active',
       Number.POSITIVE_INFINITY,
-      Number.NEGATIVE_INFINITY,
+      new Date().getTime() - ACTIVITY_EXPIRATION_MS,
       (err, members) => {
         if (err) {
           reject(err);
+        } else if (members.length < 1) {
+          // Add a placeholder person or people, otherwise frontend will choke.
+          resolve({
+            id: 1,
+            image: '',
+            status: '',
+            mood: '',
+          });
         } else {
           const promise = Promise.all(
             members.map(async id => {
@@ -17,7 +29,10 @@ function getActivePeople() {
               const status = await getStatus(id);
               const mood = await getMood(id);
               return {
-                id, // FIXME(ian): Don't expose session id to frontend.
+                id: crypto
+                  .createHash('sha256')
+                  .update(id)
+                  .digest('hex'),
                 image,
                 status,
                 mood,

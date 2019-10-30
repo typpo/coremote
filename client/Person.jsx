@@ -20,7 +20,7 @@ class Person extends React.Component {
   render() {
     const { image, status, mood } = this.props;
     return (
-      <div className="person-container">
+      <div id="me-container" className="person-container">
         <div className="reacts">
           <span className="react">✌️</span>
         </div>
@@ -35,7 +35,7 @@ class Person extends React.Component {
 }
 
 Person.propTypes = {
-  image: PropTypes.string,
+  image: PropTypes.string.isRequired,
   status: PropTypes.string,
   mood: PropTypes.string,
 };
