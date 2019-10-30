@@ -6,6 +6,8 @@
   "author": "ian",
   "license": "none",
   "scripts": {
+    "build": "webpack --display-error-details",
+    "build:watch": "webpack --watch",
     "format": "prettier --single-quote --trailing-comma all --print-width 100 --write \"**/*.js\""
   },
   "dependencies": {
@@ -15,10 +17,18 @@
     "express-nunjucks": "^2.2.3",
     "express-session": "^1.17.0",
     "nunjucks": "^3.2.0",
+    "react": "^16.11.0",
+    "react-dom": "^16.11.0",
     "redis": "^2.8.0"
   },
   "devDependencies": {
     "@arkweid/lefthook": "^0.6.3",
-    "prettier": "^1.18.2"
+    "@babel/core": "^7.6.4",
+    "@babel/preset-env": "^7.6.3",
+    "@babel/preset-react": "^7.6.3",
+    "babel-loader": "^8.0.6",
+    "prettier": "^1.18.2",
+    "webpack": "^4.41.2",
+    "webpack-cli": "^3.3.9"
   }
 }

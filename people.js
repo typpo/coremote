@@ -17,6 +17,7 @@ function getActivePeople() {
               const status = await getStatus(id);
               const mood = await getMood(id);
               return {
+                id, // FIXME(ian): Don't expose session id to frontend.
                 image,
                 status,
                 mood,

@@ -68,13 +68,4 @@ statusElt.onchange = function(e) {
 
 moodElt.onchange = function(e) {};
 
-joinElt.onclick = function() {
-  // temporary test handler
-  fetch('/api/people')
-    .then(function(resp) {
-      return resp.json();
-    })
-    .then(function(data) {
-      var othersElt = document.getElementById('others');
-    });
-};
+joinElt.onclick = function() {};
