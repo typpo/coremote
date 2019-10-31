@@ -5,7 +5,7 @@ const { redisClient } = require('./redis_helper');
 
 const ACTIVITY_EXPIRATION_MS = 3 * 60 * 1000;
 
-function getActivePeople() {
+function getActivePeople(reqId) {
   return new Promise((resolve, reject) => {
     redisClient.zrevrangebyscore(
       'active',
@@ -16,18 +16,21 @@ function getActivePeople() {
           reject(err);
         } else if (members.length < 1) {
           // Add a placeholder person or people, otherwise frontend will choke.
-          resolve({
-            id: 1,
-            image: '',
-            status: '',
-            mood: '',
-          });
+          resolve([
+            {
+              id: 1,
+              image: '',
+              status: '',
+              mood: '',
+            },
+          ]);
         } else {
           const promise = Promise.all(
             members.map(async id => {
               const image = await getImage(id);
               const status = await getStatus(id);
               const mood = await getMood(id);
+              const isMe = id === reqId;
               return {
                 id: crypto
                   .createHash('sha256')
@@ -36,11 +39,18 @@ function getActivePeople() {
                 image,
                 status,
                 mood,
+                isMe,
+                // Higher number ranked first.
+                priority: isMe ? 1 : 0,
               };
             }),
           );
           promise.then(results => {
-            resolve(results);
+            resolve(
+              results.sort((a, b) => {
+                return b.priority - a.priority;
+              }),
+            );
           });
         }
       },

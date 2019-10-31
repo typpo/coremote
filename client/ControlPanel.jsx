@@ -46,8 +46,10 @@ function startCamera() {
           count += 100;
           // TODO(ian): Hacky
           const progressBar = document.querySelector('#me-container .progress-image');
-          progressBar.style.width =
-            (count / IMAGE_REFRESH_MS) * 100 + '%';
+          if (progressBar) {
+            progressBar.style.width =
+              (count / IMAGE_REFRESH_MS) * 100 + '%';
+          }
           if (count >= IMAGE_REFRESH_MS) {
             captureImage();
             count = 0;

@@ -36,7 +36,7 @@ class People extends React.Component {
       return null;
     }
     const persons = this.state.people.map(person => (
-      <Person key={person.id} image={person.image} status={person.status} mood={person.mood} />
+      <Person key={person.id} image={person.image} status={person.status} mood={person.mood} isMe={person.isMe} />
     ));
     return (
       <div className="flex-container">

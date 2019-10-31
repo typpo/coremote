@@ -72,7 +72,7 @@ app.post('/api/mood', (req, res) => {
 });
 
 app.get('/api/people', async (req, res) => {
-  const people = await db.getActivePeople();
+  const people = await db.getActivePeople(req.session.id);
   res.send({
     people,
   });
